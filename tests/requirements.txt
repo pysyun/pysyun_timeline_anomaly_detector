@@ -1,3 +1,3 @@
-pysyun_chain @ git+https://github.com/pysyun/pysyun_chain.git@a963f2578659896d1dcf2c431c4690a0b5588596
-pysyun_uniswap_source @ git+https://github.com/pysyun/pysyun_uniswap_source.git@852f5de1696b4364fd412f9aea7e1d55311886cb
-storage_timeline_client @ git+https://github.com/vitche/python-storage-timeline-client.git@de78a264e01f5ff866039eb822cf043cb7f00b46
+pysyun_chain @git+https://github.com/pysyun/pysyun_chain.git
+pysyun_uniswap_source @git+https://github.com/pysyun/pysyun_uniswap_source.git
+storage_timeline_client @git+https://github.com/vitche/python-storage-timeline-client.git

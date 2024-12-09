@@ -1,4 +1,4 @@
-# pysyun_timeline_anomaly_detector
+# PySyun Timeline Anomaly Detector
 PySyun Timeline Framework Anomaly Detection Components
 
 ## Overview
@@ -13,13 +13,13 @@ pip install git+https://github.com/pysyun/pysyun_timeline_anomaly_detector.git
 
 ## Usage
 
-### SignalCleaner
+### pysyun.anomaly.detector.Detector
 
 ```python
-from pysyun_anomaly_detector import SignalCleaner
+from pysyun.anomaly.detector import Detector
 
 # Initialize with custom parameters
-cleaner = SignalCleaner(
+detector = Detector(
     extreme_window=60,
     extreme_threshold=3.0,
     local_window=15,
@@ -35,15 +35,15 @@ data = [
     # ...
 ]
 
-cleaned_data = cleaner.process(data)
+cleaned_data = detector.process(data)
 ```
 
-### AnomalyExtractor
+### pysyun.anomaly.extractor.Extractor
 
 ```python
-from pysyun_anomaly_detector import AnomalyExtractor
+from pysyun.anomaly.extractor import Extractor
 
-extractor = AnomalyExtractor(epsilon=0.5)
+extractor = Extractor(epsilon=0.5)
 
 # Compare original and cleaned signals
 anomalies = extractor.process([original_data, cleaned_data])
@@ -66,3 +66,4 @@ anomalies = extractor.process([original_data, cleaned_data])
 - pandas
 - numpy
 - scipy
+

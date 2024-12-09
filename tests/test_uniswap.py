@@ -1,10 +1,11 @@
-from pysyun_uniswap_source.uniswap_source import UniswapV2ReservesSource
-from pysyun_chain import ChainableGroup, Chainable
-from storage_timeline_client import Storage
 import requests
 import json
-from pysyun_anomaly_detector import AnomalyExtractor, SignalCleaner
 from time import sleep
+from pysyun.anomaly.detector import Detector
+from pysyun.anomaly.extractor import Extractor
+from storage_timeline_client import Storage
+from pysyun_chain import ChainableGroup, Chainable
+from pysyun_uniswap_source.uniswap_source import UniswapV2ReservesSource
 
 
 class UniswapPairsCollector:
@@ -28,19 +29,21 @@ class UniswapPairsCollector:
 
 
 class UniswapAnomalyDetector:
+
+    # TODO: Document arguments
     def __init__(self, storage_uri, schema_name, num_threads, anomaly_threshold=0.7):
         self.storage_uri = storage_uri
         self.schema_name = schema_name
         self.num_threads = num_threads
         self.anomaly_threshold = anomaly_threshold
 
+    # TODO: Document arguments
     def process(self, pool_address):
         data_reader = StorageReader(self.storage_uri, self.schema_name)
         time_lines_pipeline = (ChainableGroup(self.num_threads) | Chainable(data_reader) | Chainable(ValueExtractor))
 
-        clean_pipeline = ChainableGroup(self.num_threads) | Chainable(SignalCleaner())
-        anomaly_pipeline = (ChainableGroup(self.num_threads) |
-                            Chainable(AnomalyExtractor(self.anomaly_threshold)))
+        clean_pipeline = ChainableGroup(self.num_threads) | Chainable(Detector())
+        anomaly_pipeline = (ChainableGroup(self.num_threads) | Chainable(Extractor(self.anomaly_threshold)))
 
         time_lines = time_lines_pipeline.process(pool_address)
         clean_time_lines = clean_pipeline.process(time_lines)
@@ -85,6 +88,8 @@ class StorageSaver:
             requests.post(create_schema, data=data, verify=False)
 
     def process(self, data):
+
+        # TODO: How to handle multiple markets?
         timeline_name = data[0]
         values = data[1]
 
@@ -97,6 +102,7 @@ class StorageSaver:
         return data
 
 
+# TODO: Replace with the existing PySyun timeline class
 class StorageReader:
     def __init__(self, storage_uri: str, schema_name: str):
         self.storage = Storage(storage_uri)
@@ -126,13 +132,27 @@ class StorageReader:
         return parsed_values
 
 
+# TODO: Move values to environment variables
 def main():
+
     while True:
-        UniswapPairsCollector("Your data", "Your data", "Your data",
-                              "Your data").process("Your data")
+
+        # TODO: How to process multiple markets?
+        # TODO: Why do we need amount of threads?
+        (UniswapPairsCollector(
+            "https://bsc-dataseed1.binance.org",
+            "https://europe-west1-hype-dev.cloudfunctions.net/storage-timeline/",
+            "0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73.last-1000-pair",
+            3)
+         .process(["0x0034642Dde527966486bb40198d82469cb92E55b"]))
         sleep(5)
-        (UniswapAnomalyDetector("Your data", "Your data", "Your data")
-         .process("Your data"))
+
+        # TODO: Why do we need amount of threads?
+        (UniswapAnomalyDetector(
+            "https://europe-west1-hype-dev.cloudfunctions.net/storage-timeline/",
+            "0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73.last-1000-pair",
+            3)
+         .process("0x0034642Dde527966486bb40198d82469cb92E55b"))
         sleep(5)
 
 
