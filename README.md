@@ -1,9 +1,6 @@
 # pysyun_timeline_anomaly_detector
 PySyun Timeline Framework Anomaly Detection Components
 
-# pysyun_timeline_anomaly_detector
-PySyun Timeline Framework Anomaly Detection Components
-
 ## Overview
 A Python library for detecting and cleaning anomalies in time series data. The library provides two main components:
 - `SignalCleaner`: Removes outliers and smooths time series data
