@@ -9,6 +9,7 @@ from pysyun_uniswap_source.uniswap_source import UniswapV2ReservesSource
 
 
 class UniswapPairsCollector:
+
     def __init__(self, provider_settings, storage_uri, schema_name, num_threads):
         self.provider_settings = provider_settings
         self.storage_uri = storage_uri
@@ -38,10 +39,12 @@ class UniswapAnomalyDetector:
         self.anomaly_threshold = anomaly_threshold
 
     # TODO: Document arguments
+    # TODO: Add comments inside this method to understand, what is happening there?
     def process(self, pool_address):
         data_reader = StorageReader(self.storage_uri, self.schema_name)
         time_lines_pipeline = (ChainableGroup(self.num_threads) | Chainable(data_reader) | Chainable(ValueExtractor))
 
+        # TODO: Is it possible to merge that into a single pipeline definition?
         clean_pipeline = ChainableGroup(self.num_threads) | Chainable(Detector())
         anomaly_pipeline = (ChainableGroup(self.num_threads) | Chainable(Extractor(self.anomaly_threshold)))
 
@@ -75,6 +78,7 @@ class ValueExtractor:
 
 
 class StorageSaver:
+
     def __init__(self, storage_uri: str, schema_name: str):
         self.storage = Storage(storage_uri)
         self.schema_name = schema_name
@@ -104,6 +108,7 @@ class StorageSaver:
 
 # TODO: Replace with the existing PySyun timeline class
 class StorageReader:
+
     def __init__(self, storage_uri: str, schema_name: str):
         self.storage = Storage(storage_uri)
         self.schema_name = schema_name
@@ -134,9 +139,7 @@ class StorageReader:
 
 # TODO: Move values to environment variables
 def main():
-
     while True:
-
         # TODO: How to process multiple markets?
         # TODO: Why do we need amount of threads?
         (UniswapPairsCollector(
