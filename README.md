@@ -11,6 +11,19 @@ A Python library for detecting and cleaning anomalies in time series data. The l
 pip install git+https://github.com/pysyun/pysyun_timeline_anomaly_detector.git
 ```
 
+## Parameters
+
+### pysyun.anomaly.detector.Detector
+- `extreme_window`: Window size for extreme outlier detection (default: 60)
+- `extreme_threshold`: MAD threshold for extreme outliers (default: 3.0)
+- `local_window`: Window size for local anomaly detection (default: 15)
+- `local_threshold`: IQR threshold for local anomalies (default: 2.0)
+- `transition_window`: Window size for legitimate transition detection (default: 5)
+- `transition_threshold`: Threshold for transition detection (default: 0.8)
+
+### pysyun.anomaly.extractor.Extractor
+- `epsilon`: Minimum difference threshold for anomaly detection (default: 0.5)
+
 ## Usage
 
 ### pysyun.anomaly.detector.Detector
@@ -48,19 +61,6 @@ extractor = Extractor(epsilon=0.5)
 # Compare original and cleaned signals
 anomalies = extractor.process([original_data, cleaned_data])
 ```
-
-## Parameters
-
-### pysyun.anomaly.detector.Detector
-- `extreme_window`: Window size for extreme outlier detection (default: 60)
-- `extreme_threshold`: MAD threshold for extreme outliers (default: 3.0)
-- `local_window`: Window size for local anomaly detection (default: 15)
-- `local_threshold`: IQR threshold for local anomalies (default: 2.0)
-- `transition_window`: Window size for legitimate transition detection (default: 5)
-- `transition_threshold`: Threshold for transition detection (default: 0.8)
-
-### pysyun.anomaly.extractor.Extractor
-- `epsilon`: Minimum difference threshold for anomaly detection (default: 0.5)
 
 ## Requirements
 - pandas
