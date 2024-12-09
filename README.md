@@ -51,7 +51,7 @@ anomalies = extractor.process([original_data, cleaned_data])
 
 ## Parameters
 
-### SignalCleaner
+### pysyun.anomaly.detector.Detector
 - `extreme_window`: Window size for extreme outlier detection (default: 60)
 - `extreme_threshold`: MAD threshold for extreme outliers (default: 3.0)
 - `local_window`: Window size for local anomaly detection (default: 15)
@@ -59,7 +59,7 @@ anomalies = extractor.process([original_data, cleaned_data])
 - `transition_window`: Window size for legitimate transition detection (default: 5)
 - `transition_threshold`: Threshold for transition detection (default: 0.8)
 
-### AnomalyExtractor
+### pysyun.anomaly.extractor.Extractor
 - `epsilon`: Minimum difference threshold for anomaly detection (default: 0.5)
 
 ## Requirements
