@@ -100,6 +100,7 @@ class StorageSaver:
         schema = self.storage.schema(self.schema_name)
         timeline = schema.time_line(timeline_name)
 
+        # TODO: This will crash, when it is empty
         for value in values:
             timeline.add_string(value["value"], time=value["time"])
 
@@ -155,7 +156,7 @@ def main():
             "https://europe-west1-hype-dev.cloudfunctions.net/storage-timeline/",
             "0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73.last-1000-pair",
             3)
-         .process("0x0034642Dde527966486bb40198d82469cb92E55b"))
+         .process(["0x0034642Dde527966486bb40198d82469cb92E55b"]))
         sleep(5)
 
 
