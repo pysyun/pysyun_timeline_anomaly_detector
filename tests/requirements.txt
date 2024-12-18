@@ -1,3 +1,4 @@
 pysyun_chain @git+https://github.com/pysyun/pysyun_chain.git
 pysyun_uniswap_source @git+https://github.com/pysyun/pysyun_uniswap_source.git
 storage_timeline_client @git+https://github.com/vitche/python-storage-timeline-client.git
+web3

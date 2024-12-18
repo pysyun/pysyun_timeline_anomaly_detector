@@ -1,6 +1,8 @@
 import requests
 import json
 from time import sleep
+import web3
+
 from pysyun.anomaly.detector import Detector
 from pysyun.anomaly.extractor import Extractor
 from storage_timeline_client import Storage
@@ -35,6 +37,13 @@ class UniswapPairsCollector:
         Returns:
             None: Data is saved directly to storage
         """
+
+        # Check-summ the incoming addresses
+        check_summed_addresses = []
+        for address in pool_address:
+            check_summed_addresses.append(web3.Web3.to_checksum_address(address))
+        pool_address = check_summed_addresses
+
         # Initialize the reserves processor with blockchain provider settings
         reserves_processor = UniswapV2ReservesSource(self.provider_settings)
 
